@@ -39,9 +39,9 @@ def index():
     return render_template('login.html')
 
 #redirection to signin page
-@app.route("/signin",methods=["GET"])
-def toSignIn():
-    return render_template('signin.html')
+@app.route("/signup",methods=["GET"])
+def toSignUp():
+    return render_template('signup.html')
 
 #user authentication handled by flask and getting the login page
 @app.route("/login",methods=["GET","POST"])
@@ -54,7 +54,7 @@ def Login():
         
         if user and user.check_password(password):
             login_user(user)
-            return redirect(url_for('dashboard'))  # Redirect to a dashboard or home page after login
+            return redirect(url_for('dashboard'))  
         else:
             flash('Invalid username or password', 'danger')
     return render_template('login.html')
