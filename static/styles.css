@@ -102,3 +102,11 @@ h1 {
         font-size: 0.9rem;
     }
 }
+
+/*   Error Messages   */
+.success {
+    color: green;
+}
+.error {
+    color: red;
+}
