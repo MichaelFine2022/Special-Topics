@@ -18,7 +18,7 @@ login_manager.init_app(app)
 login_manager.login_view = 'login'
 
 # User model
-class User(db.Model):
+class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(150), unique=True, nullable=False)
     password = db.Column(db.String(150), nullable=False)
@@ -43,7 +43,7 @@ def signup():
         existing = User.query.filter_by(username=username).first()
         if existing:
             flash('Username already exists','error')
-            return return_template('signup.html')
+            return render_template('signup.html')
         
         hashed_password = generate_password_hash(password, method='pbkdf2:sha256')
 

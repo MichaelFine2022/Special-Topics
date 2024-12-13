@@ -13,8 +13,8 @@
         <!-- Login Form -->
         {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
-                <ul>
-                    {% for category, message in messages %}
+                <ul class="error-messages">
+                    {% for category, message in messages[:-1] %}
                         <li class="{{ category }}">{{ message }}</li>
                     {% endfor %}
                 </ul>

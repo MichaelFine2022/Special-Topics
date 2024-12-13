@@ -1,4 +1,4 @@
- /* Basic Reset */
+/* Basic Reset */
 * {
     margin: 0;
     padding: 0;
@@ -7,7 +7,7 @@
 
 body {
     font-family: 'Arial', sans-serif;
-    background-color: #f4f4f4;
+    background-color: #f9f9fb;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -103,10 +103,153 @@ h1 {
     }
 }
 
-/*   Error Messages   */
-.success {
-    color: green;
+/* Error and Success Messages */
+ul.error-messages {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: block;
+    text-align: center;
+    animation: fade-out 0.5s ease-out forwards;
 }
-.error {
-    color: red;
+
+ul.error-messages li {
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 5px;
+    color: white;
+}
+
+ul.error-messages .success {
+    background-color: #4CAF50; /* Green */
+}
+
+ul.error-messages .danger {
+    background-color: #f44336; /* Red */
+}
+
+ul.error-messages .info {
+    background-color: #2196F3; /* Blue */
+}
+
+ul.error-messages .error {
+    background-color: #ff9800; /* Orange */
+}
+
+@keyframes fade-out {
+    0% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 0.3;
+    }
+    100% {
+        opacity: 0;
+        display: none;
+    }
+}
+
+/* Dashboard Styles */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: #2c3e50;
+    color: white;
+}
+
+header .logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+header nav span {
+    margin-right: auto;
+    margin-left: 1rem;
+    font-size: 1.2rem;
+    color: #ecf0f1;
+}
+
+header .btn.logout {
+    background-color: #e74c3c;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+header .btn.logout:hover {
+    background-color: #c0392b;
+}
+
+/* Main Layout for Dashboard */
+main {
+    padding: 2rem;
+}
+
+/* Account Summary */
+.metrics {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.metric {
+    flex: 1;
+    background-color: white;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.metric h2 {
+    margin-bottom: 0.5rem;
+    color: #555;
+}
+
+.metric p {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #27ae60;
+}
+
+/* Charts Section */
+.charts {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.chart {
+    flex: 1;
+    background-color: white;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Data Table Section */
+.data-table table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+
+.data-table th,
+.data-table td {
+    text-align: left;
+    padding: 0.8rem;
+    border-bottom: 1px solid #ddd;
+}
+
+.data-table th {
+    background-color: #f4f4f4;
+}
+
+.data-table tr:hover {
+    background-color: #f1f1f1;
 }
