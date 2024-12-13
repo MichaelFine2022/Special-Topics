@@ -43,7 +43,7 @@ def signup():
         existing = User.query.filter_by(username=username).first()
         if existing:
             flash('Username already exists','error')
-            return redirect(url_for('signup'))
+            return return_template('signup.html')
         
         hashed_password = generate_password_hash(password, method='pbkdf2:sha256')
 
@@ -55,7 +55,7 @@ def signup():
         flash('Account created successfully! Please log in.', 'success')
         return redirect(url_for('login'))
 
-    return render_template('signin.html')
+    return render_template('signup.html')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
