@@ -149,47 +149,89 @@ ul.error-messages .error {
     }
 }
 
-/* Dashboard Styles */
-header {
+#dashboard-header {
+    background-color: #34495e;
+    color: white;
+    padding: 1.5rem 2.5rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem 2rem;
-    background-color: #2c3e50;
-    color: white;
+    border-radius: 10px;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-header .logo {
-    font-size: 1.5rem;
-    font-weight: bold;
+#dashboard-header .logo {
+    font-size: 2.8rem;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    transition: transform 0.3s ease;
 }
 
-header nav span {
-    margin-right: auto;
-    margin-left: 1rem;
-    font-size: 1.2rem;
-    color: #ecf0f1;
+#dashboard-header .logo:hover {
+    transform: scale(1.05);
 }
 
-header .btn.logout {
+#dashboard-header nav {
+    display: flex;
+    align-items: center;
+}
+
+#dashboard-header nav span {
+    margin-right: 1rem;
+}
+
+#dashboard-header nav a {
+    padding: 0.8rem 1.2rem;
     background-color: #e74c3c;
     color: white;
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
     text-decoration: none;
-    transition: background-color 0.3s;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    font-size: 1.1rem;
 }
 
-header .btn.logout:hover {
+#dashboard-header nav a:hover {
     background-color: #c0392b;
+    transform: scale(1.05);
 }
 
-/* Main Layout for Dashboard */
+@media (max-width: 768px) {
+    #dashboard-header {
+        flex-direction: row;
+        align-items: flex-start;
+        padding: 1rem;
+    }
+
+    #dashboard-header .logo {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+    }
+
+    #dashboard-header nav {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    #dashboard-header nav a {
+        width: 100%;
+        padding: 1rem;
+        text-align: center;
+        margin-left: 0;
+        margin-bottom: 0.5rem;
+    }
+}
+
 main {
     padding: 2rem;
 }
 
-/* Account Summary */
+.flexdiv {
+    flex:auto;
+}
+
+
 .metrics {
     display: flex;
     gap: 1.5rem;
