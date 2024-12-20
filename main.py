@@ -22,6 +22,10 @@ class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(150), unique=True, nullable=False)
     password = db.Column(db.String(150), nullable=False)
+    email = db.Column(db.String(150), unique=True, nullable=False)
+
+    def set_password(self, password):
+        self.password = generate_password_hash(password, method='pbkdf2:sha256')
 
 # Create the database and tables
 with app.app_context():
@@ -37,18 +41,21 @@ def signup():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
+        email = request.form['email']
         
 
         # Check if user already exists
-        existing = User.query.filter_by(username=username).first()
-        if existing:
+        if User.query.filter_by(username=username).first():
             flash('Username already exists','error')
+            return render_template('signup.html')
+        if User.query.filter_by(email=email).first():
+            flash('Email already in use','error')
             return render_template('signup.html')
         
         hashed_password = generate_password_hash(password, method='pbkdf2:sha256')
 
         # Add new user to database
-        new_user = User(username=username, password=hashed_password)
+        new_user = User(username=username, password=hashed_password, email=email)
         db.session.add(new_user)
         db.session.commit()
 
@@ -56,6 +63,24 @@ def signup():
         return redirect(url_for('login'))
 
     return render_template('signup.html')
+
+@app.route('/reset', methods=["GET", "POST"])
+def reset():
+    if request.method == 'GET':
+        return redirect(url_for('reset'))
+    else:
+        username = request.form.get('username')
+        new_password = request.form.get('password')
+
+        user = User.query.filter_by(username=username).first()
+        if user:
+            user.set_password(new_password)
+            db.session.commit()
+            flash('Password successfully reset.', 'success')
+            return redirect(url_for('login'))
+        else:
+            flash('User not found.', 'error')
+            return "User not found."    
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
