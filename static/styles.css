@@ -4,6 +4,20 @@
     padding: 0;
     box-sizing: border-box;
 }
+:root{
+    --background-color: #fff;
+    --secondary-background-color: #f9f9fb;
+    --title-bar: #333;
+
+}
+[data-theme="dark"] {
+    --primary-color: #9A97F3;
+    --secondary-color: #818cab;
+    --font-color: #e1e1ff;
+    --bg-color: #161625;
+    --heading-color: #818cab;
+}
+
 
 body {
     font-family: 'Arial', sans-serif;
@@ -12,11 +26,12 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
+    padding: 1.5rem 2.5rem;
 }
 
 /* Main Container */
 .container {
-    background-color: #fff;
+    background-color: var(--background-color);
     padding: 40px;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -28,7 +43,7 @@ body {
 /* Title */
 h1 {
     font-size: 2rem;
-    color: #333;
+    color: var(--title-bar);
     margin-bottom: 20px;
 }
 
@@ -51,7 +66,7 @@ h1 {
     border: 1px solid #ccc;
     border-radius: 4px;
     font-size: 1rem;
-    color: #333;
+    color: var(--title-bar);
 }
 
 .form-group input:focus {
@@ -64,7 +79,7 @@ h1 {
     width: 100%;
     padding: 12px;
     background-color: #007BFF;
-    color: white;
+    color: var(--background-color);
     font-size: 1rem;
     border: none;
     border-radius: 4px;
@@ -151,7 +166,7 @@ ul.error-messages .error {
 
 #dashboard-header {
     background-color: #34495e;
-    color: white;
+    color: var(--background-color);
     padding: 1.5rem 2.5rem;
     display: flex;
     justify-content: space-between;
@@ -185,7 +200,7 @@ ul.error-messages .error {
 #dashboard-header nav a {
     padding: 0.8rem 1.2rem;
     background-color: #e74c3c;
-    color: white;
+    color: var(--background-color);
     text-decoration: none;
     border-radius: 5px;
     transition: background-color 0.3s ease, transform 0.2s ease;
@@ -240,7 +255,7 @@ main {
 
 .metric {
     flex: 1;
-    background-color: white;
+    background-color: var(--background-color);
     padding: 1rem;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -268,7 +283,7 @@ main {
 
 .chart {
     flex: 1;
-    background-color: white;
+    background-color: var(--background-color);
     padding: 1rem;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -295,3 +310,64 @@ main {
 .data-table tr:hover {
     background-color: #f1f1f1;
 }
+
+/*Dark Mode Switch*/
+.theme-switch-wrapper {
+    display: flex;
+    align-items: center;
+  
+    em {
+      margin-left: 10px;
+      font-size: 1rem;
+    }
+}
+.theme-switch {
+    display: inline-block;
+    height: 34px;
+    position: relative;
+    width: 60px;
+}
+  
+.theme-switch input {
+    display:none;
+}
+  
+.slider {
+    background-color: #ccc;
+    bottom: 0;
+    cursor: pointer;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transition: .4s;
+}
+  
+.slider:before {
+    background-color: #fff;
+    bottom: 4px;
+    content: "";
+    height: 26px;
+    left: 4px;
+    position: absolute;
+    transition: .4s;
+    width: 26px;
+}
+  
+input:checked + .slider {
+    background-color: #66bb6a;
+}
+  
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
+  
+.slider.round {
+    border-radius: 34px;
+}
+  
+.slider.round:before {
+    border-radius: 50%;
+}
+  
+  
