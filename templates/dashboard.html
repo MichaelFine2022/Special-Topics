@@ -1,25 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Financial Dashboard</title>
     <link rel="stylesheet" href="static\styles.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="static/script.js" async defer></script>
 </head>
 <body>
     
-    <div class="theme-switch-wrapper">
-        <label class="theme-switch" for="checkbox">
-            <input type="checkbox" id="checkbox" />
-            <div class="slider round"></div>
-      </label>
-      <em>Enable Dark Mode!</em>
-    </div>
+    <button
+    type="button" data-theme-toggle aria-label="Change to light theme">Change to light theme
+    </button>
     
     <div id="flexdiv">
     <header id="dashboard-header">
-        <div class="logo">FinancePro</div>
+        <div class="logo">DASHBOARD</div>
         <nav>
             <span>Welcome, {{ current_user.username }}</span>
             <a href="/logout" class="btn logout">Logout</a>
