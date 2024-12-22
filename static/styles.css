@@ -164,19 +164,19 @@ ul.error-messages li {
 }
 
 ul.error-messages .success {
-    background-color: #4CAF50; /* Green */
+    background-color: #4CAF50; 
 }
 
 ul.error-messages .danger {
-    background-color: #f44336; /* Red */
+    background-color: #f44336; 
 }
 
 ul.error-messages .info {
-    background-color: #2196F3; /* Blue */
+    background-color: #2196F3; 
 }
 
 ul.error-messages .error {
-    background-color: #ff9800; /* Orange */
+    background-color: #ff9800; 
 }
 
 @keyframes fade-out {
@@ -301,9 +301,6 @@ main {
     color: #27ae60;
 }
 
-/* -------------------------------
-   Charts Section
---------------------------------- */
 .charts {
     display: flex;
     gap: 1.5rem;
@@ -318,9 +315,7 @@ main {
     box-shadow: 0 2px 4px var(--color-shadow);
 }
 
-/* -------------------------------
-   Data Table Section
---------------------------------- */
+
 .data-table table {
     width: 100%;
     border-collapse: collapse;
@@ -329,22 +324,20 @@ main {
 
 .data-table th,
 .data-table td {
-    text-align: left;
+    text-align: center;
     padding: 0.8rem;
     border-bottom: 1px solid #ddd;
 }
 
 .data-table th {
     background-color: #f4f4f4;
+    color:#000000;
 }
 
 .data-table tr:hover {
     background-color: #f1f1f1;
 }
 
-/* -------------------------------
-   Theme Switch
---------------------------------- */
 .theme-switch-wrapper {
     display: flex;
     align-items: center;

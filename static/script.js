@@ -31,7 +31,6 @@ button.addEventListener("click", () => {
     currentThemeSetting = newTheme;
 });
   
-  // Optional: Add listener for system theme changes
 systemSettingDark.addEventListener("change", (event) => {
     if (!localStorage.getItem("theme")) {
       const newSystemTheme = event.matches ? "dark" : "light";
