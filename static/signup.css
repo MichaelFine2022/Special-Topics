@@ -16,10 +16,28 @@ body {
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+[data-theme="light"] {
+    --background-color-light: #ffffff;
+    --text-color-light: #000000;
+    --primary-color: #007BFF;
+    --secondary-color: #555;
+    --input-bg-color-light: #f9f9f9;
+    --input-border-color: #ccc;
+    --color-bg: #ffffff;
+    --color-fg: #000000;
+    --color-shadow: rgba(0, 0, 0, 0.1);
+}
+
 [data-theme="dark"] {
     --background-color-light: #181818;
     --text-color-light: #f1f1f1;
+    --primary-color: #007BFF;
+    --secondary-color: #aaa;
     --input-bg-color-light: #333333;
+    --input-border-color: #555;
+    --color-bg: #181818;
+    --color-fg: #f1f1f1;
+    --color-shadow: rgba(255, 255, 255, 0.1);
 }
 
 h1 {
@@ -32,11 +50,12 @@ h1 {
     background-color: var(--background-color-light);
     padding: 2rem 3rem;
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px var(--color-shadow);
     max-width: 400px;
     width: 100%;
     text-align: center;
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    border: 2px solid black;
 }
 
 .container:hover {
@@ -71,23 +90,26 @@ h1 {
 }
 
 .form-group input[type="submit"] {
-    background-color: var(--primary-color);
-    color: #fff;
+    background-color: var(--primary-color); 
+    color: #fff; 
     cursor: pointer;
     border: none;
     padding: 12px;
     border-radius: 6px;
     font-size: 1rem;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .form-group input[type="submit"]:hover {
-    background-color: #0056b3;
+    background-color: #0056b3; 
+    transform: translateY(-2px);
 }
 
 .form-group input[type="submit"]:active {
-    background-color: #003f80;
+    background-color: #003f80; 
+    transform: translateY(1px);
 }
+
 
 .btn-link {
     font-size: 1rem;
@@ -117,19 +139,19 @@ h1 {
 }
 
 .error-messages .success {
-    background-color: #4CAF50; 
+    background-color: #4CAF50; /* Green */
 }
 
 .error-messages .danger {
-    background-color: #f44336; 
+    background-color: #f44336; /* Red */
 }
 
 .error-messages .info {
-    background-color: #2196F3; 
+    background-color: #2196F3; /* Blue */
 }
 
 .error-messages .error {
-    background-color: #ff9800; 
+    background-color: #ff9800; /* Orange */
 }
 
 @keyframes fade-out {
@@ -229,25 +251,26 @@ input:checked + .slider:before {
     padding: 0.75rem;
     font-size: 1rem;
     color: var(--color-bg);
-    background-color: blue;
+    background-color: #0056b3;
     border: none;
     border-radius: 6px;
     cursor: pointer;
-    transition: background-color var(--transition-time), transform var(--transition-time);
 }
 
 .btn:hover {
-    background-color: darken(blue, 10%);
+    background-color: darken(#0056b3, 10%);
     transform: translateY(-2px);
 }
 
 .btn:active {
     transform: translateY(1px);
+    background-color: #0056b3;
 }
 
 .btn-link {
     text-decoration: none;
     font-size: 1rem;
+    color: #0056b3;
 }
 
 .btn-link:hover {

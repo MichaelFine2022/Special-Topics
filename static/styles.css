@@ -329,7 +329,7 @@ main {
 }
 
 .data-table th {
-    background-color: var(--color-fg);
+    background-color: var(--color-bg);
 }
 
 .data-table tr:hover {
