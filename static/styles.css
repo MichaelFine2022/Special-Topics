@@ -301,9 +301,6 @@ main {
     color: #27ae60;
 }
 
-/* -------------------------------
-   Charts Section
---------------------------------- */
 .charts {
     display: flex;
     gap: 1.5rem;
@@ -318,9 +315,6 @@ main {
     box-shadow: 0 2px 4px var(--color-shadow);
 }
 
-/* -------------------------------
-   Data Table Section
---------------------------------- */
 .data-table table {
     width: 100%;
     border-collapse: collapse;
@@ -331,20 +325,17 @@ main {
 .data-table td {
     text-align: left;
     padding: 0.8rem;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid var(--color-fg);
 }
 
 .data-table th {
-    background-color: #f4f4f4;
+    background-color: var(--color-fg);
 }
 
 .data-table tr:hover {
     background-color: #f1f1f1;
 }
 
-/* -------------------------------
-   Theme Switch
---------------------------------- */
 .theme-switch-wrapper {
     display: flex;
     align-items: center;

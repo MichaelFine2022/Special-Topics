@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, flash, jso
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import LoginManager, login_user, logout_user, login_required, UserMixin
+from datetime import datetime
 
 app = Flask(__name__)
 app.secret_key = 'secret_key'
@@ -26,6 +27,33 @@ class User(db.Model, UserMixin):
 
     def set_password(self, password):
         self.password = generate_password_hash(password, method='pbkdf2:sha256')
+
+class Data(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False) 
+    account_name = db.Column(db.String(150), nullable=False)  
+    account_type = db.Column(db.String(50), nullable=False)  
+    balance = db.Column(db.Float, nullable=False)  
+    currency = db.Column(db.String(10), nullable=False, default="USD")  
+    last_updated = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow) 
+
+    transactions = db.relationship('Transaction', backref='data', lazy=True)
+
+    def __repr__(self):
+        return f"<Data(account_name='{self.account_name}', balance={self.balance}, currency='{self.currency}')>"
+
+class Transaction(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+
+    financial_data_id = db.Column(db.Integer, db.ForeignKey('data.id'), nullable=False)
+    amount = db.Column(db.Float, nullable=False)
+    transaction_type = db.Column(db.String(50), nullable=False) 
+    description = db.Column(db.String(200), nullable=True)  
+    timestamp = db.Column(db.DateTime, default=datetime.utcnow)  
+
+    def __repr__(self):
+        return f"<Transaction(amount={self.amount}, type='{self.transaction_type}', timestamp='{self.timestamp}')>"
 
 # Create the database and tables
 with app.app_context():
@@ -67,7 +95,7 @@ def signup():
 @app.route('/reset', methods=["GET", "POST"])
 def reset():
     if request.method == 'GET':
-        return redirect(url_for('reset'))
+        return render_template('reset.html')
     else:
         username = request.form.get('username')
         new_password = request.form.get('password')
