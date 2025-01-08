@@ -39,17 +39,24 @@ systemSettingDark.addEventListener("change", (event) => {
       currentThemeSetting = newSystemTheme;
     }
 });
-let username = document.getElementById("username");
 
 document.addEventListener("DOMContentLoaded", () => {
-    console.log("DOM loaded");
-    fetch('/api/graphs/<username>')
-    .then(response => response.json())
-    .then(data => {
-        alert(data);
-        
-    })
-    .catch(error => {
-        console.error('Error:', error);
-    });
+    const username= document.getElementById("username").textContent;
+    if (username) {
+        fetch(`/api/graphs/${username}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log(data);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    } else {
+        console.error("Username is not provided.");
+    }
 });

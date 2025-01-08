@@ -30,8 +30,8 @@ class User(db.Model, UserMixin):
 
 class Data(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(150), unique=True, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False) 
+    username = db.Column(db.String(150), unique=True, nullable=False)
     account_name = db.Column(db.String(150), nullable=False)  
     account_type = db.Column(db.String(50), nullable=False)  
     balance = db.Column(db.Float, nullable=False)  
@@ -146,19 +146,38 @@ def logout():
     return redirect(url_for('login'))
 
 @app.route('/api/graphs/<username>', methods=['GET'])
-@login_required
 def get_data(username):
-    data = Data.query.filter_by(username=username).first_or_404()
-    data = data.transactions
-    return jsonify(data)
-
+    user_data = Data.query.filter_by(username=username).first_or_404()
+    transactions = user_data.transactions
+    return jsonify([{
+    'amount': transaction.amount,
+    'transaction_type': transaction.transaction_type,
+    'description': transaction.description,
+    'timestamp': transaction.timestamp.isoformat()
+    } for transaction in transactions])
+    
+    
 def populate():
-    financial_data = Data.query.filter_by(username='admin').first()
-    if not financial_data:
-        # Creates default financial data for admin
-        financial_data = Data(
+    user = User.query.filter_by(username='admin').first()
+    if not user:
+        # Create admin user
+        admin_user = User(
             username='admin',
-            user_id=1,
+            email='admin@example.com',
+            password=generate_password_hash('password', method='pbkdf2:sha256')
+        )
+        db.session.add(admin_user)
+        db.session.commit()
+        user_id = admin_user.id
+    else:
+        user_id = user.id
+
+    financial_data = Data.query.filter_by(user_id=user_id).first()
+    if not financial_data:
+        # Create default financial data for admin
+        financial_data = Data(
+            user_id=user_id,
+            username=user.username,
             account_name="Default Account",
             account_type="Savings",
             balance=420.0,
@@ -167,7 +186,7 @@ def populate():
         db.session.add(financial_data)
         db.session.commit()
 
-        # sample transactions for admin
+        # Add sample transactions for admin
         transactions = [
             Transaction(
                 financial_data_id=financial_data.id,
@@ -184,6 +203,7 @@ def populate():
         ]
         db.session.add_all(transactions)
         db.session.commit()
+
 
 if __name__ == '__main__':
     with app.app_context():
