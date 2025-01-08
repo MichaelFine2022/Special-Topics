@@ -18,7 +18,7 @@
     <header id="dashboard-header">
         <div class="logo">DASHBOARD</div>
         <nav>
-            <span>Welcome, {{ current_user.username }}</span>
+            <span>Welcome, <p id="username">{{ current_user.username }}</p></span>
             <a href="/logout" class="btn logout">Logout</a>
         </nav>
     </header>

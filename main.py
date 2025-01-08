@@ -30,7 +30,7 @@ class User(db.Model, UserMixin):
 
 class Data(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-
+    username = db.Column(db.String(150), unique=True, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False) 
     account_name = db.Column(db.String(150), nullable=False)  
     account_type = db.Column(db.String(50), nullable=False)  
@@ -145,5 +145,48 @@ def logout():
     flash('You have been logged out.', 'info')
     return redirect(url_for('login'))
 
+@app.route('/api/graphs/<username>', methods=['GET'])
+@login_required
+def get_data(username):
+    data = Data.query.filter_by(username=username).first_or_404()
+    data = data.transactions
+    return jsonify(data)
+
+def populate():
+    financial_data = Data.query.filter_by(username='admin').first()
+    if not financial_data:
+        # Creates default financial data for admin
+        financial_data = Data(
+            username='admin',
+            user_id=1,
+            account_name="Default Account",
+            account_type="Savings",
+            balance=420.0,
+            currency="USD"
+        )
+        db.session.add(financial_data)
+        db.session.commit()
+
+        # sample transactions for admin
+        transactions = [
+            Transaction(
+                financial_data_id=financial_data.id,
+                amount=-50.0,
+                transaction_type='Expense',
+                description='Groceries'
+            ),
+            Transaction(
+                financial_data_id=financial_data.id,
+                amount=100.0,
+                transaction_type='Income',
+                description='Data Sale'
+            ),
+        ]
+        db.session.add_all(transactions)
+        db.session.commit()
+
 if __name__ == '__main__':
+    with app.app_context():
+        db.create_all()
+        populate()
     app.run(debug=True)

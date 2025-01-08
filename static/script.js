@@ -39,4 +39,17 @@ systemSettingDark.addEventListener("change", (event) => {
       currentThemeSetting = newSystemTheme;
     }
 });
-  
+let username = document.getElementById("username");
+
+document.addEventListener("DOMContentLoaded", () => {
+    console.log("DOM loaded");
+    fetch('/api/graphs/<username>')
+    .then(response => response.json())
+    .then(data => {
+        alert(data);
+        
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+});
