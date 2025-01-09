@@ -1,3 +1,5 @@
+//theme switching functions, it stores the theme in local storage
+//you can see this in dev tools, but it's disabled on school laptops
 function calculate({ localStorageTheme, systemSettingDark }) {
     return localStorageTheme || (systemSettingDark.matches ? "dark" : "light");
 }
@@ -44,6 +46,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const username= document.getElementById("username").textContent;
     if (username) {
         fetch(`/api/graphs/${username}`)
+            //.then statements are to make sure the code is executed in the right order 
+            // BECAUSE the request takes a VARIABLE amount of time
             .then(response => {
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
@@ -51,7 +55,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 return response.json();
             })
             .then(data => {
+                //prints the user's data to console for debugging
                 console.log(data);
+
+                //filters transactions by type
                 const incomeTransactions = data.filter(transaction => transaction.transaction_type === "Income");
                 const expenseTransactions = data.filter(transaction => transaction.transaction_type === "Expense");
 
@@ -59,6 +66,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 const incomeLabels = incomeTransactions.map(t => t.description || "Unknown");
                 const incomeData = incomeTransactions.map(t => t.amount);
 
+                //creates a chart.js chart
                 const incomeChart = document.getElementById("incomeChart");
                 new Chart(incomeChart, {
                     type: "pie",
@@ -82,6 +90,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 const expenseLabels = expenseTransactions.map(t => t.description || "Unknown");
                 const expenseData = expenseTransactions.map(t => Math.abs(t.amount));
 
+                //creates a chart.js chart
                 const expenseChart = document.getElementById("expensesChart");
                 new Chart(expenseChart, {
                     type: "pie",
