@@ -52,6 +52,57 @@ document.addEventListener("DOMContentLoaded", () => {
             })
             .then(data => {
                 console.log(data);
+                const incomeTransactions = data.filter(transaction => transaction.transaction_type === "Income");
+                const expenseTransactions = data.filter(transaction => transaction.transaction_type === "Expense");
+
+                // data preparation for income chart, maps descriptions and amounts from the database to the NOW local data
+                const incomeLabels = incomeTransactions.map(t => t.description || "Unknown");
+                const incomeData = incomeTransactions.map(t => t.amount);
+
+                const incomeChart = document.getElementById("incomeChart");
+                new Chart(incomeChart, {
+                    type: "pie",
+                    data: {
+                        labels: incomeLabels,
+                        datasets: [{
+                            data: incomeData,
+                            backgroundColor: generateColors(incomeTransactions.length),
+                        }]
+                    },
+                    options: {
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: "Income Distribution"
+                            }
+                        }
+                    }
+                });
+
+                // data preparation for expense chart, maps descriptions and amounts from the database to the NOW local data
+                const expenseLabels = expenseTransactions.map(t => t.description || "Unknown");
+                const expenseData = expenseTransactions.map(t => Math.abs(t.amount));
+
+                const expenseChart = document.getElementById("expensesChart");
+                new Chart(expenseChart, {
+                    type: "pie",
+                    data: {
+                        labels: expenseLabels,
+                        datasets: [{
+                            data: expenseData,
+                            backgroundColor: generateColors(expenseTransactions.length),
+                        }]
+                    },
+                    options: {
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: "Expense Distribution"
+                            }
+                        }
+                    }
+                });
+            
             })
             .catch(error => {
                 console.error('Error:', error);
