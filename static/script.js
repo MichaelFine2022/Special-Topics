@@ -66,7 +66,6 @@ document.addEventListener("DOMContentLoaded", () => {
                         labels: incomeLabels,
                         datasets: [{
                             data: incomeData,
-                            backgroundColor: generateColors(incomeTransactions.length),
                         }]
                     },
                     options: {
@@ -90,7 +89,6 @@ document.addEventListener("DOMContentLoaded", () => {
                         labels: expenseLabels,
                         datasets: [{
                             data: expenseData,
-                            backgroundColor: generateColors(expenseTransactions.length),
                         }]
                     },
                     options: {
