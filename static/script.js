@@ -41,6 +41,7 @@ systemSettingDark.addEventListener("change", (event) => {
       currentThemeSetting = newSystemTheme;
     }
 });
+let transactions;
 
 document.addEventListener("DOMContentLoaded", () => {
     const username= document.getElementById("username").textContent;
@@ -61,8 +62,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 //filters transactions by type
                 const incomeTransactions = data.filter(transaction => transaction.transaction_type === "Income");
                 const expenseTransactions = data.filter(transaction => transaction.transaction_type === "Expense");
+                transactions = Object.assign({}, incomeTransactions, expenseTransactions);;
 
-                // data preparation for income chart, maps descriptions and amounts from the database to the NOW local data
+                // data preparation for income chart, maps descriptions
+                // and amounts from the database to the NOW local data
                 const incomeLabels = incomeTransactions.map(t => t.description || "Unknown");
                 const incomeData = incomeTransactions.map(t => t.amount);
 
