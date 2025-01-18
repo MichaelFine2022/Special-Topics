@@ -58,6 +58,39 @@ document.addEventListener("DOMContentLoaded", () => {
             .then(data => {
                 //prints the user's data to console for debugging
                 console.log(data);
+                
+                const oneMonthAgo = new Date();
+                oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
+                const table = document.getElementById("tableHead");
+
+                const recentTransactions = data.filter(transaction => {
+                    const transactionDate = new Date(transaction.timestamp);
+                    return transactionDate >= oneMonthAgo;
+                });
+                recentTransactions.forEach(transaction => {
+                    const row = document.createElement("tr");
+
+                    // Create cells for each data field
+                    const descriptionCell = document.createElement("td");
+                    descriptionCell.textContent = transaction.description || "Unknown";
+                    row.appendChild(descriptionCell);
+
+                    const amountCell = document.createElement("td");
+                    amountCell.textContent = `$${transaction.amount.toFixed(2)}`;
+                    amountCell.className = transaction.transaction_type === "Income" ? "income" : "expense";
+                    row.appendChild(amountCell);
+
+                    const typeCell = document.createElement("td");
+                    typeCell.textContent = transaction.transaction_type;
+                    row.appendChild(typeCell);
+
+                    const timestampCell = document.createElement("td");
+                    timestampCell.textContent = new Date(transaction.timestamp).toLocaleString();
+                    row.appendChild(timestampCell);
+
+                    // Append the row to the table
+                    table.appendChild(row);
+                });
 
                 //filters transactions by type
                 const incomeTransactions = data.filter(transaction => transaction.transaction_type === "Income");
@@ -112,6 +145,8 @@ document.addEventListener("DOMContentLoaded", () => {
                         }
                     }
                 });
+                
+
             
             })
             .catch(error => {
