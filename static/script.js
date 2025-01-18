@@ -67,6 +67,10 @@ document.addEventListener("DOMContentLoaded", () => {
                     const transactionDate = new Date(transaction.timestamp);
                     return transactionDate >= oneMonthAgo;
                 });
+
+                let income = 0;
+                let expenses = 0;
+                let balance = 0;
                 recentTransactions.forEach(transaction => {
                     const row = document.createElement("tr");
 
@@ -94,7 +98,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 //filters transactions by type
                 const incomeTransactions = data.filter(transaction => transaction.transaction_type === "Income");
+                incomeTransactions.forEach(transaction =>{
+                    income += transaction.amount;
+                    balance += transaction.amount;
+                })
                 const expenseTransactions = data.filter(transaction => transaction.transaction_type === "Expense");
+                expenseTransactions.forEach(transaction =>{
+                    expenses += transaction.amount;
+                    balance += transaction.amount;
+                })
+                let balanceElement = document.getElementById("balance");
+                balanceElement.textContent = "$" + `${balance}`
+                let incomeElement = document.getElementById("income");
+                incomeElement.textContent = "$" + `${income}`
+                let expenseElement = document.getElementById("expenses");
+                expenseElement.textContent = "$" + `${Math.abs(expenses)}`
                 transactions = Object.assign({}, incomeTransactions, expenseTransactions);;
 
                 // data preparation for income chart, maps descriptions

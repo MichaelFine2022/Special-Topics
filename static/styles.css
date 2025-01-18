@@ -36,6 +36,10 @@ body {
     transition: background-color var(--transition-time), color var(--transition-time);
 }
 
+#username {
+    color: var(--color-fg);
+    transition: color var(--transition-time);
+}
 .container {
     background-color: var(--color-bg);
     padding: 2rem;
@@ -59,7 +63,7 @@ h1 {
 
 p, label {
     font-size: 1rem;
-    color: var(--color-secondary);
+    color: var(--color-fg);
 }
 
 a {
@@ -153,7 +157,7 @@ ul.error-messages {
     margin: 0;
     display: block;
     text-align: center;
-    animation: fade-out 0.5s ease-out forwards;
+    animation: fade-out 0.3s ease-out forwards;
 }
 
 ul.error-messages li {
@@ -231,7 +235,7 @@ ul.error-messages .error {
     color: var(--background-color);
     text-decoration: none;
     border-radius: 5px;
-    transition: background-color 0.3s ease, transform 0.2s ease;
+    transition: background-color 0.3s ease, transform 0.3s ease;
     font-size: 1.1rem;
 }
 
@@ -347,6 +351,16 @@ main {
     color: var(--color-secondary);
 }
 
+[data-theme="light"] .data-table tr:hover {
+    background-color: rgba(0, 0, 0, 0.1); 
+    color: var(--color-fg); 
+}
+
+[data-theme="dark"] .data-table tr:hover {
+    background-color: rgba(255, 255, 255, 0.1); 
+    color: var(--color-fg);
+}
+
 .theme-switch {
     display: inline-block;
     width: 60px;
@@ -394,7 +408,7 @@ button {
     font-size: 2rem;
     font-weight: bold;
     padding: 0.5rem 1rem;
-    transition: all var(--global-transition-time) ease-in-out;
+    transition: all var(--transition-time) ease-in-out;
     border-radius: 2rem;
     cursor: pointer;
     color: var(--color-fg);
