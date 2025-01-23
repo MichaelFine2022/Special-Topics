@@ -41,6 +41,47 @@ systemSettingDark.addEventListener("change", (event) => {
       currentThemeSetting = newSystemTheme;
     }
 });
+
+let responses = ["Hello I am your personal Chatbot!"]; 
+
+document.addEventListener("DOMContentLoaded", () => {
+    const sendBtn = document.getElementById("sendButton");
+    if (sendBtn) {
+        sendBtn.addEventListener("click", () => {
+            const userInput = document.getElementById("typedText").value;
+            sendMessage(userInput);
+        });
+    }
+
+    const helpButton = document.getElementById("chatbot-button");
+    helpButton.firstElementChild.textContent = "<";
+    helpButton.addEventListener("click", () => {
+        const chatbot = document.getElementById("chatbotInterface");
+        if (helpButton.firstElementChild.textContent === ">") {
+            chatbot.style.display = "none";
+            helpButton.firstElementChild.textContent = "<";
+        } else {
+            chatbot.style.display = "block";
+            helpButton.firstElementChild.textContent = ">";
+        }
+    });
+});
+
+function sendMessageToUser(textToSend){
+    //gets the div to append divs to  
+    let directory = document.getElementById("messageInbox")
+    //creates the textNode with the text needed
+    let node = document.createTextNode(textToSend)
+    //creates a new div with the right website
+    let newDiv = document.createElement("div")
+    newDiv.setAttribute("class", "received-msg-inbox")
+    //create a new p tag and append the text to it
+    let newElement = document.createElement("p")
+    newElement.appendChild(node)
+    newDiv.appendChild(newElement)
+    directory.appendChild(newDiv)
+}
+
 let transactions;
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -174,3 +215,90 @@ document.addEventListener("DOMContentLoaded", () => {
         console.error("Username is not provided.");
     }
 });
+
+function displayUserMessage(userInput) {
+    return new Promise((resolve) => {
+        const directory = document.getElementById("outgoingMessageDirectory");
+        const userDiv = document.createElement("div");
+        userDiv.setAttribute("class", "outgoing-chats-msg");
+
+        const userMessage = document.createElement("p");
+        userMessage.textContent = userInput;
+        userDiv.appendChild(userMessage);
+
+        directory.appendChild(userDiv);
+        directory.scrollTop = directory.scrollHeight; 
+        
+        resolve(); // Resolve after the user's message is appended
+    });
+}
+
+
+function displayBotMessage(botResponse) {
+    return new Promise((resolve) => {
+        const directory = document.getElementById("messageInbox");
+        const botDiv = document.createElement("div");
+        botDiv.setAttribute("class", "received-msg-inbox");
+
+        const botMessage = document.createElement("p");
+        botMessage.textContent = botResponse;
+        botDiv.appendChild(botMessage);
+
+        directory.appendChild(botDiv);
+        directory.scrollTop = directory.scrollHeight; // Auto-scroll to the bottom
+        
+        resolve(); // Resolve after the bot's message is appended
+    });
+}
+
+async function sendMessage(userInput) {
+    if (!userInput.trim()) {
+        displayBotMessage("Please enter a valid message.");
+        return;
+    }
+
+    // Display the user's message
+    displayUserMessage(userInput);
+    
+    // Clear the input field
+    document.getElementById("typedText").value = '';
+
+    if (userInput.toLowerCase() === "add an event") {
+        displayBotMessage("Event creation is currently under development. Please try again later.");
+        return;
+    }
+
+    // Prepare request payload for chatbot response
+    const requestPayload = {
+        model: "llama3.1:latest",
+        content: userInput,
+    };
+
+    try {
+        const response = await fetch('http://localhost:3000/chat', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(requestPayload),
+        });
+
+        const data = await response.json();
+
+        if (data.error) {
+            throw new Error(data.error);
+        }
+
+        await displayBotMessage(data.response);
+
+
+        if (data.intent) {
+            const { name, parameters } = data.intent;
+            intentHandler(name, parameters);
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        displayBotMessage(`Sorry, there was an error: ${error.message}`);
+    }
+}
+
