@@ -25,6 +25,10 @@
 }
 
 body {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    grid-gap: 20px;
+    height: 100vh;
     font-family: 'Arial', sans-serif;
     background-color: var(--color-bg);
     color: var(--color-fg);
@@ -442,6 +446,7 @@ button {
     display:none;
     right: 0;
     top: 50%;
+    float: left;
 }
 
 

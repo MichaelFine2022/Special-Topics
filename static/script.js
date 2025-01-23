@@ -245,9 +245,9 @@ function displayBotMessage(botResponse) {
         botDiv.appendChild(botMessage);
 
         directory.appendChild(botDiv);
-        directory.scrollTop = directory.scrollHeight; // Auto-scroll to the bottom
+        directory.scrollTop = directory.scrollHeight; 
         
-        resolve(); // Resolve after the bot's message is appended
+        resolve(); 
     });
 }
 
