@@ -11,71 +11,72 @@
 <body>
     
     
-    <div id="outer">
     <button
         type="button" data-theme-toggle aria-label="Change to light theme">Change to light theme
     </button>
-    <div id="flexdiv">
-        <header id="dashboard-header">
-            <div class="logo">DASHBOARD</div>
-            <nav>
-                <span>Welcome, <p id="username">{{ current_user.username }}</p></span>
-                <a href="/logout" class="btn logout">Logout</a>
-            </nav>
-        </header>
-
-        <main>
-            <!-- Account Summary -->
-            <section class="metrics">
-                <div class="metric">
-                    <h2>Total Balance</h2>
-                    <p id="balance"></p>
-                </div>
-                <div class="metric">
-                    <h2>Monthly Expenses</h2>
-                    <p id="expenses"></p>
-                </div>
-                <div class="metric">
-                    <h2>Monthly Income</h2>
-                    <p id="income"></p>
-                </div>
-            </section>
-
-            <!-- Financial Charts -->
-            <section class="charts">
-                <h2>Financial Overview</h2>
-                <div class="chart">
-                    <canvas id="expensesChart"></canvas>
-                </div>
-                <div class="chart">
-                    <canvas id="incomeChart"></canvas>
-                </div>
-            </section>
-
-            <!-- Transaction History -->
-            <section class="data-table">
-                <h2>Recent Transactions</h2>
-                <table>
-                    <thead id="tableHead">
-                        <tr>
-                            <th>Date</th>
-                            <th>Description</th>
-                            <th>Amount</th>
-                            <th>Type</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        
-                    </tbody>
-                </table>
-            </section>
-        </main>
+    <div id="wrapper">
+        <div id="container">
+            <header id="dashboard-header">
+                <div class="logo">DASHBOARD</div>
+                <nav>
+                    <span>Welcome, <p id="username">{{ current_user.username }}</p></span>
+                    <a href="/logout" class="btn logout">Logout</a>
+                </nav>
+            </header>
+    
+            <div>
+                <!-- Account Summary -->
+                <section class="metrics">
+                    <div class="metric">
+                        <h2>Total Balance</h2>
+                        <p id="balance"></p>
+                    </div>
+                    <div class="metric">
+                        <h2>Monthly Expenses</h2>
+                        <p id="expenses"></p>
+                    </div>
+                    <div class="metric">
+                        <h2>Monthly Income</h2>
+                        <p id="income"></p>
+                    </div>
+                </section>
+    
+                <!-- Financial Charts -->
+                <section class="charts">
+                    <h2>Financial Overview</h2>
+                    <div class="chart">
+                        <canvas id="expensesChart"></canvas>
+                    </div>
+                    <div class="chart">
+                        <canvas id="incomeChart"></canvas>
+                    </div>
+                </section>
+    
+                <!-- Transaction History -->
+                <section class="data-table">
+                    <h2>Recent Transactions</h2>
+                    <table>
+                        <thead id="tableHead">
+                            <tr>
+                                <th>Date</th>
+                                <th>Description</th>
+                                <th>Amount</th>
+                                <th>Type</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                        </tbody>
+                    </table>
+                </section>
+            </div>
         </div>
+        
         <div id="chatbot-button">
             <p> > </p>
         </div>
     </div>
-    </div>
+
     <div id="chatbotInterface">
         <div class="container" id="textContainer">
             <!-- msg-header section starts -->

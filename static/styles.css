@@ -25,19 +25,21 @@
 }
 
 body {
-    display: grid;
     grid-template-columns: 1fr 2fr;
     grid-gap: 20px;
     height: 100vh;
     font-family: 'Arial', sans-serif;
     background-color: var(--color-bg);
     color: var(--color-fg);
-    display: grid;
-    justify-content: center;
+    display: flex;
     align-items: center;
     min-height: 100vh;
     padding: 1.5rem 2.5rem;
     transition: background-color var(--transition-time), color var(--transition-time);
+    flex-direction: row-reverse;
+    flex-wrap: nowrap;
+    align-content: stretch;
+    justify-content: center;
 }
 
 #username {

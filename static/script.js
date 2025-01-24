@@ -217,37 +217,45 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function displayUserMessage(userInput) {
+    responses.push(userInput);
     return new Promise((resolve) => {
-        const directory = document.getElementById("outgoingMessageDirectory");
-        const userDiv = document.createElement("div");
-        userDiv.setAttribute("class", "outgoing-chats-msg");
-
-        const userMessage = document.createElement("p");
-        userMessage.textContent = userInput;
-        userDiv.appendChild(userMessage);
-
-        directory.appendChild(userDiv);
-        directory.scrollTop = directory.scrollHeight; 
-        
-        resolve(); // Resolve after the user's message is appended
+        document.getElementById(`typedText`).value = "";
+        //creates a text node using that text
+        let node = document.createTextNode(userInput)
+        //creates a div with the right class
+        let newDiv = document.createElement("div")
+        newDiv.setAttribute("class", "outgoing-chats-msg")
+        //creates a new paragraph and appends the node to it
+        let newElement = document.createElement("p")         
+        newElement.appendChild(node)
+        //appends the p element to the div 
+        newDiv.appendChild(newElement)
+        //gets the div to append to
+        let element = document.getElementById(`messageInbox`)
+        //appends the div with the paragraph to the outgoing chat messages div 
+        element.appendChild(newDiv)
     });
 }
 
 
 function displayBotMessage(botResponse) {
     return new Promise((resolve) => {
-        const directory = document.getElementById("messageInbox");
-        const botDiv = document.createElement("div");
-        botDiv.setAttribute("class", "received-msg-inbox");
-
-        const botMessage = document.createElement("p");
-        botMessage.textContent = botResponse;
-        botDiv.appendChild(botMessage);
-
-        directory.appendChild(botDiv);
-        directory.scrollTop = directory.scrollHeight; 
-        
-        resolve(); 
+        responses.push(botResponse);
+        document.getElementById(`typedText`).value = "";
+        //creates a text node using that text
+        let node = document.createTextNode(botResponse)
+        //creates a div with the right class
+        let newDiv = document.createElement("div")
+        newDiv.setAttribute("class", "received-msg-inbox")
+        //creates a new paragraph and appends the node to it
+        let newElement = document.createElement("p")         
+        newElement.appendChild(node)
+        //appends the p element to the div 
+        newDiv.appendChild(newElement)
+        //gets the div to append to
+        let element = document.getElementById(`messageInbox`)
+        //appends the div with the paragraph to the outgoing chat messages div 
+        element.appendChild(newDiv)
     });
 }
 
