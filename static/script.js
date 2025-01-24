@@ -271,14 +271,14 @@ async function sendMessage(userInput) {
     // Clear the input field
     document.getElementById("typedText").value = '';
 
-    if (userInput.toLowerCase() === "add an event") {
+    if (userInput.toLowerCase() === "add a transaction") {
         displayBotMessage("Event creation is currently under development. Please try again later.");
         return;
     }
 
     // Prepare request payload for chatbot response
     const requestPayload = {
-        model: "llama3.1:latest",
+        model: "smollm2:135m",
         content: userInput,
     };
 
