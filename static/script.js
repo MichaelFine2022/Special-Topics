@@ -270,10 +270,65 @@ async function sendMessage(userInput) {
     
     // Clear the input field
     document.getElementById("typedText").value = '';
-
+    const username= document.getElementById("username").textContent;
     if (userInput.toLowerCase() === "add a transaction") {
-        displayBotMessage("Event creation is currently under development. Please try again later.");
-        return;
+        const description = prompt("Enter the description for the transaction:");
+        if (!description) {
+            displayBotMessage("Transaction description is required.");
+            return;
+        }
+
+        const amount = parseInt(prompt("Enter the amount for the transaction:"));
+        if (!amount || isNaN(amount)) {
+            displayBotMessage("Please enter a valid number for the amount.");
+            return;
+        }
+        let transactionType;
+        if(amount > 0){
+            transactionType = 'Income';
+        }
+        else{
+            transactionType = 'Expense'
+        }
+
+        const transactionData = {
+            description: description,
+            amount: parseFloat(amount),
+            transaction_type: transactionType,
+            timestamp: new Date().toISOString(), 
+        };
+        
+        try {
+            const response = await fetch(`/api/add_transaction/${username}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(transactionData),
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(result => {
+                // Handle the parsed result here
+                if (result.success) {
+                    displayBotMessage("Transaction added successfully!");
+                } else {
+                    displayBotMessage("There was an issue adding the transaction.");
+                }
+            })
+            .catch(error => {
+                // Catch any errors that occurred during fetch or response handling
+                console.error('Error:', error);
+                displayBotMessage(`Sorry, there was an error: ${error.message}`);
+            });
+        } catch (error) {
+            console.error('Error:', error);
+            await displayBotMessage(`Sorry, there was an error: ${error.message}`);
+        }
     }
 
     // Prepare request payload for chatbot response

@@ -1,3 +1,4 @@
+import traceback
 from flask import Flask, render_template, request, redirect, url_for, flash, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -144,6 +145,47 @@ def logout():
     logout_user()
     flash('You have been logged out.', 'info')
     return redirect(url_for('login'))
+
+@app.route('/api/add_transaction/<username>', methods=['POST'])
+def add_transaction(username):
+    user = User.query.filter_by(username=username).first()
+    user_id = user.id
+    
+    data = request.get_json()
+
+    # Validate incoming data
+    description = data.get("description")
+    amount = data.get("amount")
+    transaction_type = data.get("transaction_type")
+    timestamp = data.get("timestamp")
+
+    if not description or not isinstance(amount, (int, float)) or not transaction_type or not timestamp:
+        return jsonify({"success": False, "message": "Invalid data"}), 400
+
+    # Create the new transaction
+    transaction = {
+        "description": description,
+        "amount": amount,
+        "transaction_type": transaction_type,
+        "timestamp": datetime.fromisoformat(timestamp),  
+    }
+    try:
+        db.session.add(transaction)
+        db.session.commit()
+    except Exception as e:
+        db.session.rollback()  # Rollback the session in case of error
+        error_message = str(e)
+        print("Error while saving transaction:", error_message)  # Log error message for debugging
+        print(traceback.format_exc())  # This will print the stack trace
+        return jsonify({"success": False, "message": f"Error saving transaction: {error_message}"}), 500
+
+
+    db.session.add(transaction)
+    db.session.commit()
+    
+    # Return success response
+    return jsonify({"success": True, "message": "Transaction added successfully!"}), 200
+
 
 @app.route('/api/graphs/<username>', methods=['GET'])
 def get_data(username):
